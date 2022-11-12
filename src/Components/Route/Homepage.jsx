@@ -1,6 +1,7 @@
 import React from "react";
 import Content from "../Parts/Content";
 import Navbar from "../Parts/Navbar";
+import AskQuestion from "./AskQuestion";
 
 
 const Homepage = () => {
@@ -10,7 +11,7 @@ const Homepage = () => {
     return (
         <>
             <Navbar />
-            <div className="container" >
+            {/* <div className="container" >
 
                 <h1 style={{ marginTop: "80px" }} className="mb-3 text-start">Questions</h1>
                 <div className="container">
@@ -24,7 +25,10 @@ const Homepage = () => {
 
                     }
                 </div>
-            </div>
+            </div> */}
+            <h1 style={{ marginTop: "80px" }} className="mb-3 text-start">Ask Questions</h1>
+
+            <AskQuestion />
         </>
     )
 }
