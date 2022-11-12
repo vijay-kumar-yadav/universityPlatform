@@ -1,0 +1,12 @@
+.icon {
+  margin-right: 12px;
+  padding-right: 10px;
+  font-size: 15px;
+  text-align: center;
+  border-right: 1px solid #0a46a0;
+}
+@media screen and (max-width: 991.5px) {
+  .button-google {
+    margin-top: 1%;
+  }
+}
