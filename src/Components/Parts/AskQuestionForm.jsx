@@ -23,7 +23,7 @@ const AskQuestionForm = () => {
     }
     return (
         <>
-            <div className=" d-flex justify-content-center container-fluid p-5">
+            <div className=" d-flex justify-content-center container-fluid pt-0 p-2 w-75">
                 <form className="row">
                     <div className="col-12 p-2">
                         <label htmlFor="question" className="form-label h5">Title</label>
@@ -35,7 +35,7 @@ const AskQuestionForm = () => {
                         <p className="form-text">Introduce the problem and expand on what you put in the title. Minimum 20 characters.</p>
                         {/* <textarea placeholder="Details here..." name="description" className="form-control" /> */}
 
-                        <div className="form-control" name="description" >
+                        <div className="form-control describe" name="description" >
 
 
                             <EditorToolbar toolbarId={'t1'} />

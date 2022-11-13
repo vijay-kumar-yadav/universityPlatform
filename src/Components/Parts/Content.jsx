@@ -17,7 +17,7 @@ const Content = () => {
                     </ul>
                 </div>
                 <div className="card-body ">
-                    <a className="card-title h5 text-decoration-none " role='button'>Why this kolaveri di?</a>
+                    <a className="card-title h5 text-decoration-none " role='button' href="/#">Why this kolaveri di?</a>
                     <p className="card-text fs-6">this is description of quesition asked</p>
                     <div className="d-flex justify-content-between ">
                         <div className="d-flex">

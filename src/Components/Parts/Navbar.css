@@ -5,6 +5,16 @@
   text-align: center;
   border-right: 1px solid #0a46a0;
 }
+
+.activeClassname {
+  color: rgb(255, 1, 1);
+}
+.nav-link {
+  font-weight: bold;
+}
+.nav-link:hover {
+  color: rgb(255, 1, 1);
+}
 @media screen and (max-width: 991.5px) {
   .button-google {
     margin-top: 1%;
