@@ -1,34 +1,55 @@
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
-import "./AskQuestionForm.css";
 import EditorToolbar, { modules, formats } from "./EditorToolbar"
+import "./AskQuestionForm.css";
 import "react-quill/dist/quill.snow.css";
+import { TagsInput } from "react-tag-input-component"
+
 
 const AskQuestionForm = () => {
-
     // const [userInfo, setuserInfo] = useState({
     //     title: '',
     //     description: '',
     //     information: '',
     //   });
+    const [tagSelected, setTagSelected] = useState([]);
+    // const [charCount, setCharCount] = useState(0);
     const [userInfo, setuserInfo] = useState({
-
+        title: '',
         description: '',
-
     });
     const ondescription = (value) => {
         setuserInfo({
+            ...userInfo,
             description: value
         });
     }
+    const onChangeValue = (e) => {
+        setuserInfo({
+            ...userInfo,
+            title: e.target.value
+        });
+    }
+    const postQues = (e) => {
+        e.preventDefault();
+        let currentSessionInfo = {
+            title: userInfo.title,
+            description: userInfo.description,
+            tags: tagSelected
+        }
+        console.log(currentSessionInfo)
+        return false;
+    }
+
     return (
         <>
             <div className=" d-flex justify-content-center container-fluid pt-0 p-2 w-75">
-                <form className="row">
-                    <div className="col-12 p-2">
+                <form className="row" onSubmit={postQues}>
+                    <div className="col-12 p-2" >
                         <label htmlFor="question" className="form-label h5">Title</label>
                         <p className="form-text">Be specific and imagine you’re asking a question to another person</p>
-                        <input name="question" type={"text"} placeholder={"What is the capital of Uganda?"} className="form-control" />
+                        <input name="question" type={"text"} placeholder={"What is the capital of Uganda?"} className="form-control"
+                            value={userInfo.title} onChange={onChangeValue} />
                     </div>
                     <div className="col-12 p-2">
                         <label htmlFor="description" className="form-label h5">What are the details of your problem?</label>
@@ -46,14 +67,24 @@ const AskQuestionForm = () => {
                                 placeholder={"Write Description Here..."}
                                 modules={modules('t1')}
                                 formats={formats}
+
                             />
+                            {/* <p className="form-text">Char: {charCount}</p> */}
                         </div>
                     </div>
                     <div className="col-12 p-2">
                         <label htmlFor="tags" className="form-label h5">Tags</label>
                         <p className="form-text">Add up to 5 tags to describe what your question is about.</p>
-                        <div id="tagDiv"></div>
-                        <input name="tags" className="form-control" placeholder="English, C++, Java, Math..." />
+                        {/* <div id="tagDiv"></div> */}
+                        {/* <input name="tags" className="form-control" onChange={onChangeTagValue} value={userInfo.tags.slice(-1)[0]} placeholder="English, C++, Java, Math..." /> */}
+
+                        <TagsInput
+                            name="tags" className="tagsInput form-control"
+                            value={tagSelected}
+                            onChange={setTagSelected}
+                            placeHolder=" English, C++, Java, Math..."
+                        />
+
                     </div>
                     <div className="col-12 ">
                         <button type="submit" className="btn btn-primary m-2">Post</button>

@@ -27,10 +27,7 @@ const Navbar = () => {
 
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                         </form>
-                        <a className="btn btn-primary button-google" href="/#" role="login">Login With Google</a>
-
-
-
+                        <button className="btn btn-primary button-google " data-bs-toggle="modal" data-bs-target="#loginModal" role="login">Login With Google</button>
                     </div>
                 </div>
             </nav>
