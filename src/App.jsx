@@ -6,6 +6,7 @@ import AskQuestion from "./Components/Route/AskQuestion";
 import Error from "./Components/Route/Error";
 import AnswerQuestion from "./Components/Parts/AnswerQuestion"
 import "./App.css"
+import LoginSignup from "./Components/Parts/LoginSignup";
 
 
 
@@ -15,12 +16,12 @@ const App = () => {
         <>
             <Navbar />
             {/* <AnswerQuestion /> */}
-
-            <Switch>
+            <LoginSignup />
+            {/* <Switch>
                 <Route path="/" component={Homepage} exact />
                 <Route path="/askQuestion" component={AskQuestion} exact />
                 <Route component={Error} />
-            </Switch>
+            </Switch> */}
         </>
     )
 }
