@@ -5,7 +5,9 @@ import "./AskQuestionForm.css";
 import "react-quill/dist/quill.snow.css";
 import { TagsInput } from "react-tag-input-component"
 import { useAuth } from "../Contexts/AuthContext";
-import { Alert } from "react-bootstrap";
+import { addDoc, collection } from 'firebase/firestore'
+import { db } from "../../firebase";
+
 
 const AskQuestionForm = () => {
     // const [userInfo, setuserInfo] = useState({
@@ -34,37 +36,73 @@ const AskQuestionForm = () => {
             title: e.target.value
         });
     }
-    const postQues = (e) => {
-        e.preventDefault();
+    const postQues = () => {
+        if (userInfo.title === '' || userInfo.description === '' || tagSelected.length === 0) {
+            setError("Please fill all fields before posting.")
+            setTimeout(() => {
+                setError("");
+            }, 2000)
+            return
+        }
         if (!currentUser) {
             setError("Please Login !")
             setTimeout(() => {
                 setError("");
             }, 2000)
+            return
         }
         else
             setError("")
 
-        let currentSessionInfo = {
-            title: userInfo.title,
-            description: userInfo.description,
-            tags: tagSelected
+        // let currentSessionInfo = {
+        //     title: userInfo.title,
+        //     description: userInfo.description,
+        //     tags: tagSelected
+        // }
+        try {
+            createPost().then(() => {
+                setSuccess("Question Posted")
+                setTimeout(() => {
+                    setSuccess("");
+                }, 2000)
+            });
         }
-        if (userInfo.title && tagSelected.length !== 0) {
-            setSuccess("Question Posted")
+        catch {
+            setError("Question not posted")
             setTimeout(() => {
-                setSuccess("");
+                setError("");
             }, 2000)
         }
-        console.log(currentSessionInfo)
-        return false;
-    }
+        // if (userInfo.title && tagSelected.length !== 0) {
 
+        // }
+        // console.log(currentSessionInfo)
+    }
+    const date = new Date()
+    const postCollectionRef = collection(db, "askedQuestion")
+    const createPost = async () => {
+        let user = currentUser.uid;
+        console.log(user)
+        await addDoc(postCollectionRef, {
+            title: userInfo.title,
+            content: userInfo.description,
+            tags: tagSelected,
+            username: currentUser.displayName,
+            userId: user,
+            askedDate: date
+            // questionId:
+
+        })
+    }
+    // console.log(currentUser.uid)
+    function stopform(e) {
+        e.preventDefault();
+        return false
+    }
     return (
         <>
-            {success && <Alert variant="success">{success}</Alert>}
             <div className=" d-flex justify-content-center container-fluid pt-0 p-2 w-75">
-                <form className="row" onSubmit={postQues}>
+                <form className="row" onSubmit={stopform}>
                     <div className="col-12 p-2" >
                         <label htmlFor="question" className="form-label h5">Title</label>
                         <p className="form-text">Be specific and imagine you’re asking a question to another person</p>
@@ -82,19 +120,19 @@ const AskQuestionForm = () => {
                             <EditorToolbar toolbarId={'t1'} />
                             <ReactQuill
                                 theme="snow"
+                                id="description"
                                 value={userInfo.description}
                                 onChange={ondescription}
                                 placeholder={"Write Description Here..."}
                                 modules={modules('t1')}
                                 formats={formats}
-
                             />
                             {/* <p className="form-text">Char: {charCount}</p> */}
                         </div>
                     </div>
                     <div className="col-12 p-2">
                         <label htmlFor="tags" className="form-label h5">Tags</label>
-                        <p className="form-text">Add up to 5 tags to describe what your question is about.</p>
+                        <p className="form-text">Add up to 5 tags to describe what your question is about. And press enter.</p>
                         {/* <div id="tagDiv"></div> */}
                         {/* <input name="tags" className="form-control" onChange={onChangeTagValue} value={userInfo.tags.slice(-1)[0]} placeholder="English, C++, Java, Math..." /> */}
 
@@ -107,8 +145,9 @@ const AskQuestionForm = () => {
 
                     </div>
                     <div className="col-12 d-flex0 ">
-                        <button type="submit" className="btn btn-primary m-2">Post</button>
+                        {success && <p className="text-success text-center">{success}</p>}
                         {error && <p className="text-danger text-center ">{error}</p>}
+                        <button type="button" className="btn btn-primary m-2" onClick={postQues}>Post</button>
                     </div>
                 </form>
             </div >

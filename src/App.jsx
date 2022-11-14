@@ -12,6 +12,7 @@ import Login from "./Components/Parts/Login";
 import ForgotPassword from "./Components/Parts/ForgetPassword";
 // import PrivateRoute from "./Components/Route/PrivateRoute";
 import UpdateProfile from "./Components/Parts/UpdateProfile";
+import AnswerQuestion from "./Components/Parts/AnswerQuestion";
 
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
                     <Route path="/updateProfile" component={UpdateProfile} />
                     <Route path="/login" component={Login} />
                     <Route path="/forgot-password" component={ForgotPassword} />
+                    <Route path="/answerQuestion" component={AnswerQuestion} />
                     <Route component={Error} />
                 </Switch>
             </AuthProvider>

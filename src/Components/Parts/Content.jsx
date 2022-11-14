@@ -1,31 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Content.css"
+import { Link } from "react-router-dom";
+import { db } from "../../firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 
+const Content = (props) => {
+    const question = props.question;
+    const [ansList, setAnsList] = useState(0);
 
-
-const Content = () => {
-
-
+    function getQuestionDesc() {
+        const htmlEl = document.createElement('body');
+        htmlEl.innerHTML = question.content;
+        return htmlEl.innerText;
+    }
+    const tags = question.tags;
+    // const date = new Date()
+    console.log(props.id)
+    const getAns = async () => {
+        const getAnswerRef = collection(db, "answers")
+        const answer = await getDocs(getAnswerRef)
+        return answer.docs
+    }
+    useEffect(() => {
+        getAns().then((data) => {
+            let requireAns = data.filter((data) => data.data().questionid === props.id)
+            setAnsList(requireAns.length)
+        })
+    }, [])
     return (
         <>
             <div className="card mt-2">
                 <div className="card-header">
                     <ul className="d-flex list-unstyled  my-auto" >
                         <li className="vote">Votes : 0</li>
-                        <li className="totalAns">Answer : 0</li>
+                        <li className="totalAns">Answer : {ansList}</li>
                     </ul>
                 </div>
                 <div className="card-body ">
-                    <a className="card-title h5 text-decoration-none " role='button' href="/#">Why this kolaveri di?</a>
-                    <p className="card-text fs-6">this is description of quesition asked</p>
+                    <Link className="card-title h5 text-decoration-none " role='button' to={"/answerQuestion/?" + props.id}>{question.title}</Link>
+                    <p className="card-text fs-6 content">{getQuestionDesc()}</p>
                     <div className="d-flex justify-content-between ">
                         <div className="d-flex">
-                            <p className="tag">Tag 1</p>
-                            <p className="tag">Tag 2</p>
+                            {
+                                tags.map((tag, i) => {
+                                    return (<p key={i} className="tag">{tag}</p>)
+                                })
+                            }
+
                         </div>
                         <p className="askedby">
-                            Asked by <span>IMG Vijay</span> on 09-10-22
+                            <span >  {`${question.username ? "Asked: " + question.username : ""}`}</span>
                         </p>
                     </div>
 

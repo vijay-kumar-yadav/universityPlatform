@@ -147,11 +147,11 @@ export const QuillToolbar = (props) => {
                     <select className="ql-color" title="text-color" />
                     <select className="ql-background" title="background-color" />
                 </span>
-                <span className="ql-formats">
+                {/* <span className="ql-formats">
                     {/* <button className="ql-link" title="Embed-link" /> */}
-                    {/* <button className="ql-image" title="add image" /> */}
-                    <button className="ql-video" title="add video" />
-                </span>
+                {/* <button className="ql-image" title="add image" /> */}
+                {/* <button className="ql-video" title="add video" /> */}
+                {/* </span> */}
                 <span className="ql-formats">
                     {/* <button className="ql-formula" /> */}
                     <button className="ql-code-block" title="add code-block" />

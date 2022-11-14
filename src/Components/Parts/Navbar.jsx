@@ -38,17 +38,18 @@ const Navbar = () => {
                             </li>
 
                         </ul>
-                        <form className="d-flex" role="search">
+                        {/* <form className="d-flex" role="search">
 
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        </form>
+                        </form> */}
+                        {/* {currentUser ? currentUser.displayName : ""} */}
                         {currentUser ?
-                            <div className=" dropdown">
+                            <div className="dropdown">
                                 <button title={currentUser.email} className=" border-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src={userIMG} alt="user" style={{ width: "20px", height: "20px" }}></img>
                                 </button>
                                 <ul className="dropdown-menu">
-                                    <li><NavLink className="dropdown-item" to="/profileUpdate" >Profile</NavLink></li>
+                                    <li><NavLink className="dropdown-item" to="/updateProfile" >Profile</NavLink></li>
                                     <li><button className="dropdown-item" onClick={handleLogout}  >Log out</button></li>
                                     {/* <li><a className="dropdown-item" href="#">Something else here</a></li> */}
                                 </ul>
