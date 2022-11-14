@@ -4,7 +4,8 @@ import EditorToolbar, { modules, formats } from "./EditorToolbar"
 import "./AskQuestionForm.css";
 import "react-quill/dist/quill.snow.css";
 import { TagsInput } from "react-tag-input-component"
-
+import { useAuth } from "../Contexts/AuthContext";
+import { Alert } from "react-bootstrap";
 
 const AskQuestionForm = () => {
     // const [userInfo, setuserInfo] = useState({
@@ -12,6 +13,9 @@ const AskQuestionForm = () => {
     //     description: '',
     //     information: '',
     //   });
+    const { currentUser } = useAuth();
+    const [error, setError] = useState("")
+    const [success, setSuccess] = useState("")
     const [tagSelected, setTagSelected] = useState([]);
     // const [charCount, setCharCount] = useState(0);
     const [userInfo, setuserInfo] = useState({
@@ -32,10 +36,25 @@ const AskQuestionForm = () => {
     }
     const postQues = (e) => {
         e.preventDefault();
+        if (!currentUser) {
+            setError("Please Login !")
+            setTimeout(() => {
+                setError("");
+            }, 2000)
+        }
+        else
+            setError("")
+
         let currentSessionInfo = {
             title: userInfo.title,
             description: userInfo.description,
             tags: tagSelected
+        }
+        if (userInfo.title && tagSelected.length !== 0) {
+            setSuccess("Question Posted")
+            setTimeout(() => {
+                setSuccess("");
+            }, 2000)
         }
         console.log(currentSessionInfo)
         return false;
@@ -43,6 +62,7 @@ const AskQuestionForm = () => {
 
     return (
         <>
+            {success && <Alert variant="success">{success}</Alert>}
             <div className=" d-flex justify-content-center container-fluid pt-0 p-2 w-75">
                 <form className="row" onSubmit={postQues}>
                     <div className="col-12 p-2" >
@@ -86,12 +106,12 @@ const AskQuestionForm = () => {
                         />
 
                     </div>
-                    <div className="col-12 ">
+                    <div className="col-12 d-flex0 ">
                         <button type="submit" className="btn btn-primary m-2">Post</button>
-                        <button className="btn btn-danger m-2">Clear</button>
+                        {error && <p className="text-danger text-center ">{error}</p>}
                     </div>
                 </form>
-            </div>
+            </div >
 
         </>
     )

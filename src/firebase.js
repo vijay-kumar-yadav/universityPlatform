@@ -1,13 +1,18 @@
-import firebase from "firebase/app";
-import "firebase/auth";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 
 
 
 const app = firebase.initializeApp({
-    apiKey: "AIzaSyCSjtgyigeIXwB3rB_V3QvQLpujS8_p6k0",
-    authDomain: "hustleflow-18714.firebaseapp.com",
-    projectId: "hustleflow-18714",
-    storageBucket: "hustleflow-18714.appspot.com",
-    messagingSenderId: "119793600037",
-    appId: "1:119793600037:web:7479500ce0e76dbe93e1cc"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID
 })
+
+
+
+export const auth = app.auth();
+export default app;

@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import questionIMG from "../../Images/question.png"
 import "./Navbar.css";
-import { NavLink } from "react-router-dom";
+import userIMG from "../../Images/user.png"
+import { NavLink, useHistory } from "react-router-dom";
+import { useAuth } from "../Contexts/AuthContext";
+import { Alert } from "react-bootstrap";
 
 const Navbar = () => {
-    console.log("hi")
+    const [error, setError] = useState("")
+    const { currentUser, logout } = useAuth()
+    const history = useHistory();
+    async function handleLogout() {
+        setError('');
+        try {
+            await logout();
+            history.push("/")
+        } catch {
+            setError('Failed to log out');
+        }
+    }
+    console.log(currentUser)
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-light fixed-top">
@@ -27,10 +42,23 @@ const Navbar = () => {
 
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                         </form>
-                        <button className="btn btn-primary button-google " data-bs-toggle="modal" data-bs-target="#loginModal" role="login">Login With Google</button>
+                        {currentUser ?
+                            <div className=" dropdown">
+                                <button title={currentUser.email} className=" border-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src={userIMG} alt="user" style={{ width: "20px", height: "20px" }}></img>
+                                </button>
+                                <ul className="dropdown-menu">
+                                    <li><NavLink className="dropdown-item" to="/profileUpdate" >Profile</NavLink></li>
+                                    <li><button className="dropdown-item" onClick={handleLogout}  >Log out</button></li>
+                                    {/* <li><a className="dropdown-item" href="#">Something else here</a></li> */}
+                                </ul>
+                            </div>
+
+                            : <NavLink className="btn btn-primary button-google" to="/login">Login</NavLink>}
                     </div>
                 </div>
             </nav>
+            {error && <Alert variant="danger">{error}</Alert>}
         </>
     )
 }
