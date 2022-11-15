@@ -29,7 +29,7 @@ const Homepage = () => {
                     {postList.length !== 0 ?
                         postList.map((doc, j) => {
                             const question = doc.data();
-                            console.log(question);
+                            {/* console.log(question); */ }
                             return (<Content key={j} question={question} id={doc.id} />)
                         }) : <div class="spinner-border" role="status">
                             <span class="sr-only"></span>

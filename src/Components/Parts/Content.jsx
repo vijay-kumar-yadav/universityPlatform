@@ -16,7 +16,7 @@ const Content = (props) => {
     }
     const tags = question.tags;
     // const date = new Date()
-    console.log(props.id)
+    // console.log(props.id)
     const getAns = async () => {
         const getAnswerRef = collection(db, "answers")
         const answer = await getDocs(getAnswerRef)
@@ -49,7 +49,7 @@ const Content = (props) => {
 
                         </div>
                         <p className="askedby">
-                            <span >  {`${question.username ? "Asked: " + question.username : ""}`}</span>
+                            <span >  {`${question.username ? "Asked By - " + question.username : ""}`}</span>
                         </p>
                     </div>
 
