@@ -111,6 +111,7 @@ const AnswerQuestion = () => {
                 setTimeout(() => {
                     setSuccess("");
                 }, 2000)
+                document.location.reload()
 
             });
             // history.push('/')
