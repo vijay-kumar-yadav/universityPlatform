@@ -47,7 +47,7 @@ export default function UpdateProfile() {
 
     return (
         <>
-            <Card style={{ marginTop: "80px" }}>
+            <Card style={{ marginTop: "80px" }} className="container">
                 <Card.Body>
                     <h2 className="text-center mb-4">Update Profile</h2>
                     {error && <Alert variant="danger">{error}</Alert>}
