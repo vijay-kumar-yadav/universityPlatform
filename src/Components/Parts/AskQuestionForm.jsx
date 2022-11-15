@@ -10,6 +10,7 @@ import { db } from "../../firebase";
 
 
 const AskQuestionForm = () => {
+
     // const [userInfo, setuserInfo] = useState({
     //     title: '',
     //     description: '',
@@ -65,6 +66,13 @@ const AskQuestionForm = () => {
                 setTimeout(() => {
                     setSuccess("");
                 }, 2000)
+                // history.push('/');
+                setuserInfo({
+                    title: "",
+                    description: ""
+                })
+                document.getElementById("titleForm").setAttribute("value", "")
+                setTagSelected([])
             });
         }
         catch {
@@ -82,7 +90,7 @@ const AskQuestionForm = () => {
     const postCollectionRef = collection(db, "askedQuestion")
     const createPost = async () => {
         let user = currentUser.uid;
-        console.log(user)
+        // console.log(user)
         await addDoc(postCollectionRef, {
             title: userInfo.title,
             content: userInfo.description,
@@ -106,12 +114,12 @@ const AskQuestionForm = () => {
                     <div className="col-12 p-2" >
                         <label htmlFor="question" className="form-label h5">Title</label>
                         <p className="form-text">Be specific and imagine you’re asking a question to another person</p>
-                        <input name="question" type={"text"} placeholder={"What is the capital of Uganda?"} className="form-control"
-                            value={userInfo.title} onChange={onChangeValue} />
+                        <input name="question" type={"text"} placeholder={"Ask Question here..."} className="form-control"
+                            value={userInfo.title} onChange={onChangeValue} id="titleForm" />
                     </div>
                     <div className="col-12 p-2">
                         <label htmlFor="description" className="form-label h5">What are the details of your problem?</label>
-                        <p className="form-text">Introduce the problem and expand on what you put in the title. Minimum 20 characters.</p>
+                        <p className="form-text">Introduce the problem and expand on what you put in the title.</p>
                         {/* <textarea placeholder="Details here..." name="description" className="form-control" /> */}
 
                         <div className="form-control describe" name="description" >

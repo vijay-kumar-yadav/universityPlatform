@@ -33,7 +33,6 @@ const Content = (props) => {
             <div className="card mt-2">
                 <div className="card-header">
                     <ul className="d-flex list-unstyled  my-auto" >
-                        <li className="vote">Votes : 0</li>
                         <li className="totalAns">Answer : {ansList}</li>
                     </ul>
                 </div>

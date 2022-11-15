@@ -36,7 +36,6 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <NavLink exact activeClassName="activeClassname" className="nav-link" to="/askQuestion">Ask Question</NavLink>
                             </li>
-
                         </ul>
                         {/* <form className="d-flex" role="search">
 

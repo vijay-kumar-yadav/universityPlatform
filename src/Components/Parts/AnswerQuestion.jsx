@@ -6,21 +6,27 @@ import "./AnswerQuestion.css"
 import 'react-quill/dist/quill.bubble.css'
 import { db } from "../../firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
-import HTMLReactParser from "html-react-parser";
+import Comments from "./Comments";
+// import { useHistory } from "react-router-dom";
+// import $ from "jquery"
+// import Likes from "./Likes";
+// import $ from "jquery"
 const AnswerQuestion = () => {
+    // const history = useHistory()
+    const [comment, setComment] = useState({})
     const { currentUser } = useAuth()
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
     const questionId = window.location.href.split("?")[1];
     const [ansList, setAnsList] = useState([]);
     const [getData, setData] = useState({});
-
     const getQues = async () => {
         const getCollectionRef = collection(db, "askedQuestion")
         const data = await getDocs(getCollectionRef)
         return data.docs
     }
     const getAns = async () => {
+        // const [comment, setComment] = useState([])
         const getAnswerRef = collection(db, "answers")
         const answer = await getDocs(getAnswerRef)
         return answer.docs
@@ -34,6 +40,14 @@ const AnswerQuestion = () => {
             getAns().then((data) => {
                 let requireAns = data.filter((data) => data.data().questionid === questionId)
                 setAnsList(requireAns)
+                setComment(
+                    requireAns.map((data, index) => {
+                        const ans = data.data()
+                        return (
+                            <Comments id={index} ans={ans} />
+                        )
+                    })
+                )
             })
         }, [questionId]
     )
@@ -50,8 +64,6 @@ const AnswerQuestion = () => {
     const date = new Date();
     const postCollectionRef = collection(db, "answers")
     const createPost = async () => {
-        let user = currentUser.uid;
-        console.log(user)
         await addDoc(postCollectionRef, {
             questionid: questionId,
             content: userInfo.description,
@@ -60,13 +72,7 @@ const AnswerQuestion = () => {
         })
     }
     const postAns = () => {
-        if (userInfo.description === '') {
-            setError("Please fill the answer field.")
-            setTimeout(() => {
-                setError("");
-            }, 2000)
-            return
-        }
+        // console.log(userInfo.description === "<p><br></p>")
         if (!currentUser) {
             setError("Please Login !")
             setTimeout(() => {
@@ -76,19 +82,39 @@ const AnswerQuestion = () => {
         }
         else
             setError("")
+        // console.log(typeof userInfo.description)
+        if (userInfo.description === '' || userInfo.description === "<p><br></p>" || typeof userInfo.description === 'undefined') {
+            setError("Please fill the answer field.")
+            setTimeout(() => {
+                setError("");
+            }, 2000)
+            return
+        }
 
         // let currentSessionInfo = {
         //     title: userInfo.title,
         //     description: userInfo.description,
         //     tags: tagSelected
         // }
+
         try {
             createPost().then(() => {
+                setComment(
+                    ansList.map((data, index) => {
+                        const ans = data.data()
+                        return (
+                            <Comments id={index} ans={ans} />
+                        )
+                    })
+                )
                 setSuccess("Answer Posted")
                 setTimeout(() => {
                     setSuccess("");
                 }, 2000)
+
             });
+            // history.push('/')
+            setuserInfo("")
         }
         catch {
             setError("Answer not posted")
@@ -123,25 +149,16 @@ const AnswerQuestion = () => {
                     {
                         ansList.length !== 0 ?
                             <>
-
-
-                                {ansList.map((data, index) => {
-                                    const ans = data.data()
-
-                                    return (
-                                        <>
-                                            {/* <div dangerouslySetInnerHTML={ans.content}></div> */}
-                                            <div className="mb-2 p-2 rounded-4 bg-opacity-25 bg-info">
-                                                {HTMLReactParser(ans.content)}
-                                                <p className="font-italic mt-0 text-end">By - {ans.username}</p>
-                                            </div>
-
-                                        </>
-                                    )
-                                })}
+                                {
+                                    comment.map((data) => data)
+                                }
                             </>
                             : ""
                     }
+                    {/* <>
+                                                        <p>Likes - <span id="like">0</span></p>
+                                                        <button className="btn " onClick={() => { document.getElementById("like").innerHTML = 1 }}><Likes /></button>
+                                                    </> */}
                     <hr />
                     <div className="container w-100">
                         <EditorToolbar toolbarId={'t1'} />
