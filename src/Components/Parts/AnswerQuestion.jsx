@@ -13,6 +13,7 @@ import Comments from "./Comments";
 // import $ from "jquery"
 const AnswerQuestion = () => {
     // const history = useHistory()
+    const [loading, setLoading] = useState(true);
     const [comment, setComment] = useState({})
     const { currentUser } = useAuth()
     const [error, setError] = useState("")
@@ -35,6 +36,7 @@ const AnswerQuestion = () => {
         () => {
             getQues().then((data) => {
                 const docs = data.filter((doc) => doc.id === questionId)
+                setLoading(false)
                 return (setData(docs[0].data()))
             })
             getAns().then((data) => {
@@ -131,60 +133,65 @@ const AnswerQuestion = () => {
     }
     return (
         <>
-            <div className="container-fluid" >
-                <div className="container">
-                    <h2 style={{ marginTop: "80px" }} className="mb-3 ">{getData.title}</h2>
-                    <ul className="d-flex list-unstyled  my-auto" >
-                        <li className="asked  text-secondary">Asked : <span className="text-dark">{getData.username}</span></li>
-                        <li className="totalAns text-secondary ">Answer : <span className="text-dark">{ansList.length}</span></li>
-                    </ul>
-                    <hr />
-                    <ReactQuill
-                        value={getData.content}
+            {loading ?
+                <div className="container d-flex justify-content-center align-items-center vh-100">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only"></span>
+                    </div>
+                </div> : <div className="container-fluid" >
+                    <div className="container">
+                        <h2 style={{ marginTop: "80px" }} className="mb-3 ">{getData.title}</h2>
+                        <ul className="d-flex list-unstyled  my-auto" >
+                            <li className="asked  text-secondary">Asked : <span className="text-dark">{getData.username}</span></li>
+                            <li className="totalAns text-secondary ">Answer : <span className="text-dark">{ansList.length}</span></li>
+                        </ul>
+                        <hr />
+                        <ReactQuill
+                            value={getData.content}
 
-                        readOnly={true}
-                        theme={"bubble"}
-                    />
-                    <hr />
-                    <h4 className="text-center text-bg-success">Answers</h4>
-                    {
-                        ansList.length !== 0 ?
-                            <>
-                                {
-                                    comment.map((data) => data)
-                                }
-                            </>
-                            : ""
-                    }
-                    {/* <>
+                            readOnly={true}
+                            theme={"bubble"}
+                        />
+                        <hr />
+                        <h4 className="text-center text-bg-success">Answers</h4>
+                        {
+                            ansList.length !== 0 ?
+                                <>
+                                    {
+                                        comment.map((data) => data)
+                                    }
+                                </>
+                                : ""
+                        }
+                        {/* <>
                                                         <p>Likes - <span id="like">0</span></p>
                                                         <button className="btn " onClick={() => { document.getElementById("like").innerHTML = 1 }}><Likes /></button>
                                                     </> */}
-                    <hr />
-                    <div className="container w-100">
-                        <EditorToolbar toolbarId={'t1'} />
-                        <ReactQuill
-                            theme="snow"
-                            id="description"
-                            value={userInfo.description}
-                            onChange={ondescription}
-                            placeholder={"Write Description Here..."}
-                            modules={modules('t1')}
-                            formats={formats}
-                        />
-                    </div>
-                    <div className="text-center mt-3">
-                        {success && <p className="text-success text-center">{success}</p>}
-                        {error && <p className="text-danger text-center ">{error}</p>}
-                        <button className="btn btn-primary" onClick={postAns}>
-                            PostAns
-                        </button>
-                    </div>
-                    <hr />
+                        <hr />
+                        <div className="container w-100">
+                            <EditorToolbar toolbarId={'t1'} />
+                            <ReactQuill
+                                theme="snow"
+                                id="description"
+                                value={userInfo.description}
+                                onChange={ondescription}
+                                placeholder={"Write Description Here..."}
+                                modules={modules('t1')}
+                                formats={formats}
+                            />
+                        </div>
+                        <div className="text-center mt-3">
+                            {success && <p className="text-success text-center">{success}</p>}
+                            {error && <p className="text-danger text-center ">{error}</p>}
+                            <button className="btn btn-primary" onClick={postAns}>
+                                PostAns
+                            </button>
+                        </div>
+                        <hr />
 
-                </div>
+                    </div>
 
-            </div>
+                </div>}
         </>
     )
 }

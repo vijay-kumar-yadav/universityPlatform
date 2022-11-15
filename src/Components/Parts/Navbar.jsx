@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import questionIMG from "../../Images/question.png"
 import "./Navbar.css";
-import userIMG from "../../Images/user.png"
+// import userIMG from "../../Images/user.png"
 import { NavLink, useHistory } from "react-router-dom";
 import { useAuth } from "../Contexts/AuthContext";
 import { Alert, NavDropdown } from "react-bootstrap";
@@ -44,7 +44,11 @@ const Navbar = () => {
                         {/* {currentUser ? currentUser.displayName : ""} */}
                         {currentUser ?
                             <>
-                                <NavDropdown title={<img title={"User: " + currentUser.displayName} src={userIMG} alt="user" style={{ width: "20px", height: "20px" }}></img>}>
+
+
+                                <NavDropdown title={
+                                    "🤖" + currentUser.displayName
+                                }>
                                     <NavLink className="dropdown-item" to="/updateProfile" >Profile</NavLink>
                                     <NavDropdown.Item onClick={handleLogout} >Log out</NavDropdown.Item>
                                 </NavDropdown>

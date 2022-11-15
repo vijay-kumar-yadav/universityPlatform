@@ -45,7 +45,9 @@ export default function Login() {
                             <Form.Control type="password" ref={passwordRef} required />
                         </Form.Group>
                         <Button disabled={loading} className="w-100 mt-3" type="submit">
-                            Log In
+                            {loading ? <div class="spinner-border text-success" role="status">
+                                <span class="sr-only"></span>
+                            </div> : "Log In"}
                         </Button>
                     </Form>
                     <div className="w-100 text-center mt-3">

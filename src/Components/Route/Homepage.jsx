@@ -31,7 +31,9 @@ const Homepage = () => {
                             const question = doc.data();
                             console.log(question);
                             return (<Content key={j} question={question} id={doc.id} />)
-                        }) : <p>No Questions Asked Yet</p>
+                        }) : <div class="spinner-border" role="status">
+                            <span class="sr-only"></span>
+                        </div>
 
                     }
                 </div>
