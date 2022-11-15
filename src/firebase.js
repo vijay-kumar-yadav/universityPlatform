@@ -5,12 +5,12 @@ import { getFirestore } from "firebase/firestore";
 
 
 const app = firebase.initializeApp({
-    apiKey: "AIzaSyCSjtgyigeIXwB3rB_V3QvQLpujS8_p6k0",
-    authDomain: "hustleflow-18714.firebaseapp.com",
-    projectId: "hustleflow-18714",
-    storageBucket: "hustleflow-18714.appspot.com",
-    messagingSenderId: "119793600037",
-    appId: "1:119793600037:web:7479500ce0e76dbe93e1cc"
+    apiKey: REACT_APP_FIREBASE_API_KEY,
+    authDomain: REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: REACT_APP_FIREBASE_APP_ID
 })
 
 
