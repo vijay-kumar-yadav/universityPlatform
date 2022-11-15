@@ -27,7 +27,7 @@ const Content = (props) => {
             let requireAns = data.filter((data) => data.data().questionid === props.id)
             setAnsList(requireAns.length)
         })
-    }, [])
+    }, [props.id])
     return (
         <>
             <div className="card mt-2">
