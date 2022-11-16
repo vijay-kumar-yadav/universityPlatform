@@ -16,8 +16,7 @@ const Homepage = () => {
             getQues()
         }, []
     )
-    // let questionTab = Array.from({ length: 20 }, (_, i) => i + 1)
-    // console.log(questionTab)
+
     return (
         <>
 
@@ -29,7 +28,6 @@ const Homepage = () => {
                     {postList.length !== 0 ?
                         postList.map((doc, j) => {
                             const question = doc.data();
-                            {/* console.log(question); */ }
                             return (<Content key={j} question={question} id={doc.id} />)
                         }) : <div class="spinner-border" role="status">
                             <span class="sr-only"></span>
