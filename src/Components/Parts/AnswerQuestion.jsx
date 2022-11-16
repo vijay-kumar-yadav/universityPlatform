@@ -46,7 +46,7 @@ const AnswerQuestion = () => {
                     requireAns.map((data, index) => {
                         const ans = data.data()
                         return (
-                            <Comments id={index} ans={ans} />
+                            <Comments id={data.id} index={index} ans={ans} />
                         )
                     })
                 )
@@ -70,7 +70,9 @@ const AnswerQuestion = () => {
             questionid: questionId,
             content: userInfo.description,
             answerAt: date,
+            likes: [],
             username: currentUser.displayName
+
         })
     }
     const postAns = () => {
@@ -92,13 +94,6 @@ const AnswerQuestion = () => {
             }, 2000)
             return
         }
-
-        // let currentSessionInfo = {
-        //     title: userInfo.title,
-        //     description: userInfo.description,
-        //     tags: tagSelected
-        // }
-
         try {
             createPost().then(() => {
                 setComment(
